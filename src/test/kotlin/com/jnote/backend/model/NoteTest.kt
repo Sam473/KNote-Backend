@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 
-internal class InMemoryNoteStoreTest {
+internal class NoteTest {
 
     private val title = "title"
     private val body = "body"

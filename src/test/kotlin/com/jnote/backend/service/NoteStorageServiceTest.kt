@@ -3,7 +3,7 @@ package com.jnote.backend.service
 import com.jnote.backend.model.interfaces.INote
 import com.jnote.backend.storage.InMemoryNoteStore
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito
@@ -29,9 +29,7 @@ internal class NoteStorageServiceTest {
         val mutableList = mutableListOf<INote>()
         mutableList.add(note)
         whenever(inMemoryNoteStore.notes).thenReturn(mutableList)
-
         assertEquals(noteStorageService.getNotes(), Collections.unmodifiableList(mutableList))
-        assertThat(noteStorageService.inMemoryNoteStore).isSameAs(Collections.unmodifiableList(mutableList))
     }
 
     @Test
