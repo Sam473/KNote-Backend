@@ -1,10 +1,13 @@
 package com.jnote.backend.model
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder
 import com.jnote.backend.model.interfaces.INote
 import com.jnote.backend.model.interfaces.INoteBuilder
 import java.io.Serializable
 import java.time.LocalDateTime
 
+@JsonDeserialize(builder = Note.NoteBuilder::class)
 class Note : INote, Serializable {
     override val title: String
     override val body: String
@@ -29,6 +32,7 @@ class Note : INote, Serializable {
         return NoteBuilder()
     }
 
+    @JsonPOJOBuilder
     class NoteBuilder : INoteBuilder {
         lateinit var title: String
         lateinit var body: String

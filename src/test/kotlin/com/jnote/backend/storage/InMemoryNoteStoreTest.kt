@@ -4,15 +4,17 @@ import com.jnote.backend.model.interfaces.INote
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
-import org.mockito.junit.jupiter.MockitoSettings
-import org.mockito.kotlin.mock
+import org.mockito.junit.jupiter.MockitoExtension
 
-@MockitoSettings
+@ExtendWith(MockitoExtension::class)
 internal class InMemoryNoteStoreTest {
 
     private lateinit var inMemoryStore: InMemoryNoteStore
-    private val notes: MutableList<INote> = mock()
+
+    @Mock
+    private lateinit var notes: MutableList<INote>
 
     @BeforeEach
     fun beforeEach() {

@@ -6,18 +6,20 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito
 import org.mockito.Mock
-import org.mockito.junit.jupiter.MockitoSettings
-import org.mockito.kotlin.mock
+import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
 import java.util.*
 
-@MockitoSettings
+@ExtendWith(MockitoExtension::class)
 internal class NoteStorageServiceTest {
 
     private lateinit var noteStorageService: NoteStorageService
-    private val inMemoryNoteStore: InMemoryNoteStore = mock()
+
+    @Mock
+    private lateinit var inMemoryNoteStore: InMemoryNoteStore
 
     @BeforeEach
     fun beforeEach() {
