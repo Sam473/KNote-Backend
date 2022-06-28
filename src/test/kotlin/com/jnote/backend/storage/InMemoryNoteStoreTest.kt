@@ -23,7 +23,7 @@ internal class InMemoryNoteStoreTest {
 
     @Test
     fun getNotesWillReturnAllNotes() {
-        assertEquals(inMemoryStore.notes, notes)
+        assertEquals(inMemoryStore.getNotes(), notes)
     }
 
     @Test

@@ -1,17 +1,16 @@
 package com.jnote.backend.service
 
 import com.jnote.backend.model.interfaces.INote
-import com.jnote.backend.storage.InMemoryNoteStore
+import com.jnote.backend.storage.PersistentNoteStore
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.BDDMockito
+import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
-import java.util.*
 
 @ExtendWith(MockitoExtension::class)
 internal class NoteStorageServiceTest {
@@ -19,24 +18,23 @@ internal class NoteStorageServiceTest {
     private lateinit var noteStorageService: NoteStorageService
 
     @Mock
-    private lateinit var inMemoryNoteStore: InMemoryNoteStore
+    private lateinit var noteStore: PersistentNoteStore
 
     @BeforeEach
     fun beforeEach() {
-        noteStorageService = NoteStorageService(inMemoryNoteStore)
+        noteStorageService = NoteStorageService(noteStore)
     }
 
     @Test
     fun getNotesWillReturnAllNotes(@Mock note: INote) {
-        val mutableList = mutableListOf<INote>()
-        mutableList.add(note)
-        whenever(inMemoryNoteStore.notes).thenReturn(mutableList)
-        assertEquals(noteStorageService.getNotes(), Collections.unmodifiableList(mutableList))
+        val list = listOf(note)
+        whenever(noteStore.getNotes()).thenReturn(list)
+        assertEquals(noteStorageService.getNotes(), list)
     }
 
     @Test
     fun saveNoteWillAddToNotes(@Mock note: INote) {
-        BDDMockito.given(inMemoryNoteStore.saveNote(note)).willReturn(note)
+        given(noteStore.saveNote(note)).willReturn(note)
         assertThat(noteStorageService.saveNote(note)).isEqualTo(note)
     }
 }
