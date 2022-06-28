@@ -1,6 +1,6 @@
 package com.jnote.backend.model
 
-import com.jnote.backend.model.Note.NoteBuilder
+import com.jnote.backend.model.Note.Builder
 import com.jnote.backend.model.interfaces.INote
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,7 +13,7 @@ internal class NoteTest {
 
     @Test
     fun builderCreatesCorrectObject() {
-        val testNote: INote = NoteBuilder()
+        val testNote: INote = Builder()
             .withTitle(title)
             .withBody(body)
             .build()

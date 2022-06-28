@@ -7,65 +7,42 @@ import com.jnote.backend.model.interfaces.INoteBuilder
 import java.io.Serializable
 import java.time.LocalDateTime
 
-@JsonDeserialize(builder = Note.NoteBuilder::class)
-class Note : INote, Serializable {
+@JsonDeserialize(builder = Note.Builder::class)
+class Note private constructor(builder: Builder) : INote, Serializable {
     override val title: String
     override val body: String
     override val dateCreated: LocalDateTime
     override val dateLastModified: LocalDateTime
 
-    private constructor(builder: NoteBuilder) {
+    init {
         title = builder.title
         body = builder.body
         dateCreated = builder.dateCreated
         dateLastModified = builder.dateLastModified
     }
 
-    constructor(title: String, body: String) {
-        this.title = title
-        this.body = body
-        dateCreated = LocalDateTime.now()
-        dateLastModified = LocalDateTime.now()
-    }
-
-    override fun builder(): NoteBuilder {
-        return NoteBuilder()
+    override fun builder(): Builder {
+        return Builder()
     }
 
     @JsonPOJOBuilder
-    class NoteBuilder : INoteBuilder {
+    class Builder : INoteBuilder {
         lateinit var title: String
         lateinit var body: String
-        var dateCreated: LocalDateTime
-        var dateLastModified: LocalDateTime
+        var dateCreated: LocalDateTime = LocalDateTime.now()
+        var dateLastModified: LocalDateTime = LocalDateTime.now()
 
-        override fun withBody(body: String): NoteBuilder {
-            this.body = body
-            return this
-        }
+        override fun withBody(body: String) = apply { this.body = body }
 
-        override fun withTitle(title: String): NoteBuilder {
-            this.title = title
-            return this
-        }
+        override fun withTitle(title: String) = apply { this.title = title }
 
-        override fun withDateCreated(dateCreated: LocalDateTime): NoteBuilder {
-            this.dateCreated = dateCreated
-            return this
-        }
+        override fun withDateCreated(dateCreated: LocalDateTime) = apply { this.dateCreated = dateCreated }
 
-        override fun withDateLastModified(dateLastModified: LocalDateTime): NoteBuilder {
-            this.dateLastModified = dateLastModified
-            return this
-        }
+        override fun withDateLastModified(dateLastModified: LocalDateTime) =
+            apply { this.dateLastModified = dateLastModified }
 
         override fun build(): Note {
             return Note(this)
-        }
-
-        init {
-            this.dateCreated = LocalDateTime.now()
-            this.dateLastModified = LocalDateTime.now()
         }
     }
 }

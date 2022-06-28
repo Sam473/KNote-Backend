@@ -41,7 +41,7 @@ internal class NoteControllerSpringTest {
 
     @Test
     fun saveNoteShouldReturnNote() {
-        val note: INote = Note.NoteBuilder()
+        val note: INote = Note.Builder()
             .withTitle("Sandwich")
             .withBody("body")
             .build()

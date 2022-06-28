@@ -14,6 +14,6 @@ interface INote {
     val dateLastModified: LocalDateTime
 
     fun builder(): INoteBuilder {
-        return Note.NoteBuilder()
+        return Note.Builder()
     }
 }
